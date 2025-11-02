@@ -1,4 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { ExampleView, VIEW_TYPE_EXAMPLE } from './ExampleView';
 
 // Remember to rename these classes and interfaces!
 
@@ -16,10 +17,14 @@ export default class MyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		// This creates an icon in the left ribbon.
+		this.registerView(
+			VIEW_TYPE_EXAMPLE,
+			(leaf) => new ExampleView(leaf)
+		);
+
+		// 3. MODIFY RIBBON ICON TO OPEN THE VIEW
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (_evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+			this.activateView(); // <-- Changed from showing a notice
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
@@ -76,6 +81,23 @@ export default class MyPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+	}
+
+	// 4. ADD THE METHOD TO ACTIVATE THE VIEW
+	async activateView() {
+		const { workspace } = this.app;
+
+		let leaf = workspace.getLeavesOfType(VIEW_TYPE_EXAMPLE)[0];
+
+		if (!leaf) {
+			leaf = workspace.getLeaf(true);
+			await leaf.setViewState({
+				type: VIEW_TYPE_EXAMPLE,
+				active: true,
+			});
+		}
+
+		workspace.revealLeaf(leaf);
 	}
 
 	onunload() {
