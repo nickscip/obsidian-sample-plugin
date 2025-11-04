@@ -1,44 +1,50 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 
 // Import the Counter Svelte component and the `mount` and `unmount` methods.
-import Counter from './Counter.svelte';
+import Flashcard from './Flashcard.svelte';
 import { mount, unmount } from 'svelte';
 
 export const VIEW_TYPE_EXAMPLE = 'example-view';
 
 export class ExampleView extends ItemView {
-  // A variable to hold on to the Counter instance mounted in this ItemView.
-  counter: ReturnType<typeof Counter> | undefined;
+	// A variable to hold on to the Counter instance mounted in this ItemView.
+	cardText: ReturnType<typeof Flashcard> | undefined;
 
-  constructor(leaf: WorkspaceLeaf) {
-    super(leaf);
-  }
+	constructor(leaf: WorkspaceLeaf) {
+		super(leaf);
+	}
 
-  getViewType() {
-    return VIEW_TYPE_EXAMPLE;
-  }
+	getViewType() {
+		return VIEW_TYPE_EXAMPLE;
+	}
 
-  getDisplayText() {
-    return 'Example view';
-  }
+	getDisplayText() {
+		return 'Example view';
+	}
 
-  async onOpen() {
-    // Attach the Svelte component to the ItemViews content element and provide the needed props.
-    this.counter = mount(Counter, {
-      target: this.contentEl,
-      props: {
-        startCount: 5,
-      }
-    });
+	async onOpen() {
+		// Create separate containers for each component
+		const flashcardContainer = this.contentEl.createDiv();
+		// const counterContainer = this.contentEl.createDiv();
 
-    // Since the component instance is typed, the exported `increment` method is known to TypeScript.
-    this.counter.increment();
-  }
+		// Attach the Svelte components to separate containers
+		this.cardText = mount(Flashcard, { target: flashcardContainer });
+		// this.counter = mount(Counter, {
+		// 	target: counterContainer,
+		// 	props: {
+		// 		startCount: 5,
+		// 	}
+		// });
 
-  async onClose() {
-    if (this.counter) {
-      // Remove the Counter from the ItemView.
-      unmount(this.counter);
-    }
-  }
+		// Since the component instance is typed, the exported `increment` method is known to TypeScript.
+		// this.counter.increment();
+
+	}
+
+	async onClose() {
+		if (this.cardText) {
+			// Remove the Flashcard from the ItemView.
+			unmount(this.cardText);
+		}
+	}
 }
