@@ -1,14 +1,17 @@
 <script lang="ts">
-	let onFront = $state(false);
-	let side = $derived( onFront ? "Front" : "Back" );
+	let onFront = $state(true);
+	// let { frontText, backText } = $props();
+	let frontText = "Front";
+	let backText = "Back";
+	let side = $derived( onFront ? frontText : backText );
 
 	function flipCard() {
 		onFront = !onFront
 	}
 </script>
 
-<button class="flashcard" onclick={flipCard}>
-	<span>{side} of the Card: What is Svelte?</span>
+<button class="flashcard" on:click={flipCard}>
+	<span>{side}</span>
 </button>
 
 <style>

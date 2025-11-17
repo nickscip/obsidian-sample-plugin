@@ -19,7 +19,7 @@ export class ExampleView extends ItemView {
 	}
 
 	getDisplayText() {
-		return 'Example view';
+		return 'My Flashcards';
 	}
 
 	async onOpen() {

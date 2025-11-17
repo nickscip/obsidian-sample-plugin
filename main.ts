@@ -23,7 +23,8 @@ export default class MyPlugin extends Plugin {
 		);
 
 		// 3. MODIFY RIBBON ICON TO OPEN THE VIEW
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (_evt: MouseEvent) => {
+		const ribbonIconEl = this.addRibbonIcon('wallet-cards', 'Sample Plugin', (_evt: MouseEvent) => {
+			// TODO: Create custom ribbon icon: https://docs.obsidian.md/Plugins/User+interface/Icons#Add+your+own+icon
 			this.activateView(); // <-- Changed from showing a notice
 		});
 		// Perform additional things with the ribbon
@@ -119,12 +120,12 @@ class SampleModal extends Modal {
 	}
 
 	onOpen() {
-		const {contentEl} = this;
+		const { contentEl } = this;
 		contentEl.setText('Woah!');
 	}
 
 	onClose() {
-		const {contentEl} = this;
+		const { contentEl } = this;
 		contentEl.empty();
 	}
 }
@@ -138,7 +139,7 @@ class SampleSettingTab extends PluginSettingTab {
 	}
 
 	display(): void {
-		const {containerEl} = this;
+		const { containerEl } = this;
 
 		containerEl.empty();
 
