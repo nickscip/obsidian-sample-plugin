@@ -13,3 +13,21 @@ button.flashcard *,
 button.flashcard .cardtext {
 	color: black !important;
 }
+
+/* Ensure flashcard button allows wrapping */
+button.flashcard {
+	white-space: normal !important;
+}
+
+/* Ensure flashcard text respects card boundaries */
+button.flashcard .card-text {
+	max-width: 100% !important;
+	width: 100% !important;
+	word-wrap: break-word !important;
+	overflow-wrap: anywhere !important;
+	word-break: break-word !important;
+	white-space: normal !important; /* Force text wrapping */
+	box-sizing: border-box !important;
+	display: block !important;
+	min-width: 0 !important; /* Critical for flex items to shrink */
+}

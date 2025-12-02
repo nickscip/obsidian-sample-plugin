@@ -1,14 +1,14 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 
-// Import the Counter Svelte component and the `mount` and `unmount` methods.
-import Flashcard from './Flashcard.svelte';
+// Import the Deck Svelte component and the `mount` and `unmount` methods.
+import Deck from './Deck.svelte';
 import { mount, unmount } from 'svelte';
 
 export const VIEW_TYPE_EXAMPLE = 'example-view';
 
 export class ExampleView extends ItemView {
-	// A variable to hold on to the Counter instance mounted in this ItemView.
-	cardText: ReturnType<typeof Flashcard> | undefined;
+	// A variable to hold on to the Deck instance mounted in this ItemView.
+	deck: ReturnType<typeof Deck> | undefined;
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
@@ -23,28 +23,17 @@ export class ExampleView extends ItemView {
 	}
 
 	async onOpen() {
-		// Create separate containers for each component
-		const flashcardContainer = this.contentEl.createDiv();
-		// const counterContainer = this.contentEl.createDiv();
+		// Create container for the Deck component
+		const deckContainer = this.contentEl.createDiv();
 
-		// Attach the Svelte components to separate containers
-		this.cardText = mount(Flashcard, { target: flashcardContainer });
-		// this.counter = mount(Counter, {
-		// 	target: counterContainer,
-		// 	props: {
-		// 		startCount: 5,
-		// 	}
-		// });
-
-		// Since the component instance is typed, the exported `increment` method is known to TypeScript.
-		// this.counter.increment();
-
+		// Attach the Deck Svelte component to the container
+		this.deck = mount(Deck, { target: deckContainer });
 	}
 
 	async onClose() {
-		if (this.cardText) {
-			// Remove the Flashcard from the ItemView.
-			unmount(this.cardText);
+		if (this.deck) {
+			// Remove the Deck from the ItemView.
+			unmount(this.deck);
 		}
 	}
 }
