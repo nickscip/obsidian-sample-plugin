@@ -10,7 +10,7 @@
 	}
 </script>
 
-<button class="flashcard" on:click={flipCard}>
+<button class="flashcard" onclick={flipCard}>
 	<span>{side}</span>
 </button>
 
