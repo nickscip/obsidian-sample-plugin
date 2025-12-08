@@ -31,3 +31,11 @@ button.flashcard .card-text {
 	display: block !important;
 	min-width: 0 !important; /* Critical for flex items to shrink */
 }
+
+/* Empty state message styling */
+.empty-state-message {
+	margin-top: 50px;
+	text-align: center;
+	color: var(--text-muted);
+	padding: 20px;
+}
